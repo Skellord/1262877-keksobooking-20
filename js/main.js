@@ -5,7 +5,7 @@ var type = ["palace", "flat", "house", "bungalo"];
 var time = ["12:00", "13:00", "14:00"];
 var featuresList = ["wifi", "dishwasher", "parking", "washer", "elevator", "conditioner"];
 var photosList = ["http://o0.github.io/assets/images/tokyo/hotel1.jpg", "http://o0.github.io/assets/images/tokyo/hotel2.jpg", "http://o0.github.io/assets/images/tokyo/hotel3.jpg"];
-var pin = document.querySelector("#pin");
+var pin = document.querySelector("#pin").content.querySelector(".map__pin");
 var mapPins = document.querySelector(".map__pins");
 
 var pad = function(num, size) {
@@ -53,12 +53,14 @@ document.querySelector(".map").classList.remove("map--faded")
 
 var createPins = function (element) {
     var pinsElement = pin.cloneNode(true);
-    pinsElement.querySelector(".map__pin").style.left = "element.location.x";
-    pinsElement.querySelector(".map__pin").style.top = "element.location.y";
+    pinsElement.setAttribute("style", "element.location.x");
+    pinsElement.style.top = "element.location.y";
     pinsElement.getElementsByTagName("img").src = "element.author.avatar";
     pinsElement.getElementsByTagName("img").alt = "element.offer.title";
+    return pinsElement;
 }
 var fragment = document.createDocumentFragment();
 for (var k = 0; k < array.length; k++) {
-    fragment.appendChild(createPins(array[k]));
+    fragment.appendChild(createPins(array));
 }
+mapPins.appendChild(fragment);
