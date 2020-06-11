@@ -21,10 +21,10 @@ var getRandom = function (min, max) {
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
-var addElements = function (someArray) {
+var createRandomArray = function (parentArray) {
   var elements = [];
-  for (var j = 1; j < someArray.length - getRandom(0, someArray.length); j++) {
-    elements.push(someArray[j]);
+  for (var j = 1; j < parentArray.length - getRandom(0, parentArray.length); j++) {
+    elements.push(parentArray[j]);
   }
   return elements;
 };
@@ -42,14 +42,14 @@ var renderArray = function () {
         guests: getRandom(0, 2),
         checkin: time[getRandom(0, time.length - 1)],
         checkout: time[getRandom(0, time.length - 1)],
-        features: addElements(featuresList),
+        features: createRandomArray(featuresList),
         description: 'Описание' + i,
-        photos: addElements(photosList)}
+        photos: createRandomArray(photosList)}
     });
   }
   return array;
 };
-var array = renderArray();
+var mocks = renderArray();
 
 document.querySelector('.map').classList.remove('map--faded');
 
@@ -67,7 +67,7 @@ var createPins = function (element) {
   return pinElement;
 };
 var fragment = document.createDocumentFragment();
-for (var k = 0; k < array.length; k++) {
-  fragment.appendChild(createPins(array[k]));
+for (var k = 0; k < mocks.length; k++) {
+  fragment.appendChild(createPins(mocks[k]));
 }
 mapPins.appendChild(fragment);
