@@ -1,5 +1,8 @@
 'use strict';
 
+var PIN_WIDTH = 65;
+var PIN_HEIGHT = 83;
+
 var type = ['palace', 'flat', 'house', 'bungalo'];
 var time = ['12:00', '13:00', '14:00'];
 var featuresList = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
@@ -11,23 +14,21 @@ var mapPinMain = document.querySelector('.map__pin--main');
 var map = document.querySelector('.map');
 var form = document.querySelector('.ad-form');
 var formFieldsets = form.querySelectorAll('fieldset');
-var PIN_WIDTH = 65;
-var PIN_HEIGHT = 83;
-var inptAddress = form.querySelector('#address');
-var inptType = form.querySelector('#type');
-var inptPrice = form.querySelector('#price');
-var inptRooms = form.querySelector('#room_number');
-var inptGuests = form.querySelector('#capacity');
-var inptTimeIn = form.querySelector('#timein');
-var inptTimeOut = form.querySelector('#timeout');
-var inptTitle = form.querySelector('#title');
-var inptDescription = form.querySelector('#description');
-var inptFeatures = form.querySelector('.features');
-var inptAvatar = form.querySelector('#avatar');
-var inptImages = form.querySelector('#images');
+var inputAddress = form.querySelector('#address');
+var inputType = form.querySelector('#type');
+var inputPrice = form.querySelector('#price');
+var inputRooms = form.querySelector('#room_number');
+var inputGuests = form.querySelector('#capacity');
+var inputTimeIn = form.querySelector('#timein');
+var inputTimeOut = form.querySelector('#timeout');
+var inputTitle = form.querySelector('#title');
+var inputDescription = form.querySelector('#description');
+var inputFeatures = form.querySelector('.features');
+var inputAvatar = form.querySelector('#avatar');
+var inputImages = form.querySelector('#images');
 
 
-inptAddress.value = mapPinMain.offsetLeft + Math.ceil(PIN_WIDTH / 2) + ',\xa0' + (mapPinMain.offsetTop + PIN_HEIGHT);
+inputAddress.value = mapPinMain.offsetLeft + Math.ceil(PIN_WIDTH / 2) + ',\xa0' + (mapPinMain.offsetTop + PIN_HEIGHT);
 
 var addDisabledFieldsets = function () {
   for (var i = 0; i < formFieldsets.length; i++) {
@@ -97,17 +98,28 @@ var createPins = function (element) {
   pinImage.src = element.author.avatar;
   return pinElement;
 };
-var fragment = document.createDocumentFragment();
-for (var k = 0; k < mocks.length; k++) {
-  fragment.appendChild(createPins(mocks[k]));
-}
 
+var fragment = document.createDocumentFragment();
+
+var appendMocks = function () {
+  for (var k = 0; k < mocks.length; k++) {
+    fragment.appendChild(createPins(mocks[k]));
+  }
+  mapPins.appendChild(fragment).cloneNode(true);
+};
 var activatePage = function () {
+  appendMocks();
   map.classList.remove('map--faded');
-  mapPins.appendChild(fragment);
   form.classList.remove('ad-form--disabled');
   removeDisabledFieldsets();
 };
+var removeCreatedPins = function () {
+  var mapPinsAll = mapPins.querySelectorAll('.map__pin');
+  for (var i = 1; i < mapPinsAll.length; i++) {
+    mapPinsAll[i].remove();
+  }
+};
+
 mapPinMain.addEventListener('mousedown', function (evt) {
   if (evt.which === 1) {
     activatePage();
@@ -118,79 +130,90 @@ mapPinMain.addEventListener('keydown', function (evt) {
     activatePage();
   }
 });
-inptTimeIn.addEventListener('change', function () {
-  inptTimeOut.value = inptTimeIn.value;
+
+inputTimeIn.addEventListener('change', function () {
+  inputTimeOut.value = inputTimeIn.value;
 });
-inptTimeOut.addEventListener('change', function () {
-  inptTimeIn.value = inptTimeOut.value;
+inputTimeOut.addEventListener('change', function () {
+  inputTimeIn.value = inputTimeOut.value;
 });
-inptType.addEventListener('change', function () {
-  if (inptType.value === 'bungalo') {
-    inptPrice.min = inptPrice.placeholder = 0;
-  } else if (inptType.value === 'flat') {
-    inptPrice.min = inptPrice.placeholder = 1000;
-  } else if (inptType.value === 'house') {
-    inptPrice.min = inptPrice.placeholder = 5000;
-  } else if (inptType.value === 'palace') {
-    inptPrice.min = inptPrice.placeholder = 10000;
+inputType.addEventListener('change', function () {
+  if (inputType.value === 'bungalo') {
+    inputPrice.min = inputPrice.placeholder = 0;
+  } else if (inputType.value === 'flat') {
+    inputPrice.min = inputPrice.placeholder = 1000;
+  } else if (inputType.value === 'house') {
+    inputPrice.min = inputPrice.placeholder = 5000;
+  } else if (inputType.value === 'palace') {
+    inputPrice.min = inputPrice.placeholder = 10000;
   }
 });
+
 var removeDisabledOption = function () {
-  for (var i = 0; i < inptGuests.options.length; i++) {
-    inptGuests.options[i].disabled = false;
+  for (var i = 0; i < inputGuests.options.length; i++) {
+    inputGuests.options[i].disabled = false;
   }
 };
-inptRooms.addEventListener('change', function () {
-  if (inptRooms.value === '1') {
+
+inputRooms.addEventListener('change', function () {
+  if (inputRooms.value === '1') {
     removeDisabledOption();
-    inptGuests.value = '1';
-    inptGuests.options[3].disabled = true;
-    inptGuests.options[0].disabled = true;
-    inptGuests.options[1].disabled = true;
-  } else if (inptRooms.value === '2') {
+    inputGuests.value = '1';
+    inputGuests.options[3].disabled = true;
+    inputGuests.options[0].disabled = true;
+    inputGuests.options[1].disabled = true;
+  } else if (inputRooms.value === '2') {
     removeDisabledOption();
-    inptGuests.value = '2';
-    inptGuests.options[3].disabled = true;
-    inptGuests.options[0].disabled = true;
-  } else if (inptRooms.value === '3') {
+    inputGuests.value = '2';
+    inputGuests.options[3].disabled = true;
+    inputGuests.options[0].disabled = true;
+  } else if (inputRooms.value === '3') {
     removeDisabledOption();
-    inptGuests.value = '2';
-    inptGuests.options[3].disabled = true;
-  } else if (inptRooms.value === '100') {
+    inputGuests.value = '2';
+    inputGuests.options[3].disabled = true;
+  } else if (inputRooms.value === '100') {
     removeDisabledOption();
-    inptGuests.value = '0';
-    inptGuests.options[0].disabled = true;
-    inptGuests.options[1].disabled = true;
-    inptGuests.options[2].disabled = true;
+    inputGuests.value = '0';
+    inputGuests.options[0].disabled = true;
+    inputGuests.options[1].disabled = true;
+    inputGuests.options[2].disabled = true;
   }
 });
-inptPrice.addEventListener('invalid', function () {
-  if (inptPrice.validity.valueMissing) {
-    inptPrice.setCustomValidity('Введите число от ' + inptPrice.min + ' до 1000000');
+
+inputPrice.addEventListener('invalid', function () {
+  if (inputPrice.validity.valueMissing) {
+    inputPrice.setCustomValidity('Введите число от ' + inputPrice.min + ' до 1000000');
   } else {
-    inptPrice.setCustomValidity('');
+    inputPrice.setCustomValidity('');
   }
 });
-form.addEventListener('reset', function (evt) {
-  evt.preventDefault();
-  inptAddress.value = mapPinMain.offsetLeft + Math.ceil(PIN_WIDTH / 2) + ',\xa0' + (mapPinMain.offsetTop + PIN_HEIGHT);
+
+var resettingPage = function () {
+  form.classList.add('ad-form--disabled');
+  inputAddress.value = mapPinMain.offsetLeft + Math.ceil(PIN_WIDTH / 2) + ',\xa0' + (mapPinMain.offsetTop + PIN_HEIGHT);
   addDisabledFieldsets();
   map.classList.add('map--faded');
-  inptTitle.value = '';
-  inptType.value = 'flat';
-  inptRooms.value = '1';
-  inptDescription.value = '';
-  inptPrice.value = '';
-  inptGuests.value = '1';
-  inptGuests.options[3].disabled = true;
-  inptGuests.options[0].disabled = true;
-  inptGuests.options[1].disabled = true;
-  inptTimeIn.value = '12:00';
-  inptTimeOut.value = '12:00';
-  inptAvatar.value = '';
-  inptImages.value = '';
-  var features = inptFeatures.querySelectorAll('input');
+  inputTitle.value = '';
+  inputType.value = 'flat';
+  inputRooms.value = '1';
+  inputDescription.value = '';
+  inputPrice.value = '';
+  inputGuests.value = '1';
+  inputGuests.options[3].disabled = true;
+  inputGuests.options[0].disabled = true;
+  inputGuests.options[1].disabled = true;
+  inputTimeIn.value = '12:00';
+  inputTimeOut.value = '12:00';
+  inputAvatar.value = '';
+  inputImages.value = '';
+  removeCreatedPins();
+  var features = inputFeatures.querySelectorAll('input');
   for (var i = 0; i < features.length; i++) {
     features[i].checked = false;
   }
+};
+
+form.addEventListener('reset', function (evt) {
+  evt.preventDefault();
+  resettingPage();
 });
