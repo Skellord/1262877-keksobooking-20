@@ -28,7 +28,7 @@
     var array = [];
     for (var i = 0; i < 8; i++) {
       array.push({author: {avatar: 'img/avatars/user' + pad(i + 1, 2) + '.png'},
-        location: {x: getRandom(0, mapPins.offsetWidth),
+        location: {x: getRandom(0, window.variables.mapPins.offsetWidth),
           y: getRandom(130, 630)},
         offer: {title: 'Заголовок' + i,
           address: String(location.x) + ',\xa0' + String(location.y),
@@ -45,5 +45,7 @@
     }
     return array;
   };
-  window.mocks = renderArray();
+  window.data = {
+    getMocks: renderArray()
+  };
 })();
