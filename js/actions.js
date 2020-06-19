@@ -22,8 +22,8 @@ window.actions = {
       return pinElement;
     };
     var appendMocks = function () {
-      for (var k = 0; k < window.mocks.length; k++) {
-        window.variables.fragment.appendChild(createPins(window.mocks[k]));
+      for (var k = 0; k < mocks.length; k++) {
+        window.variables.fragment.appendChild(createPins(mocks[k]));
       }
       window.variables.mapPins.appendChild(window.variables.fragment).cloneNode(true);
     };

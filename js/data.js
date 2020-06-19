@@ -46,6 +46,6 @@
     return array;
   };
   window.data = {
-    getMocks: renderArray()
+    getMocks: renderArray
   };
 })();

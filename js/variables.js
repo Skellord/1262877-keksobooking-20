@@ -1,6 +1,7 @@
 'use strict';
 
 (function () {
+  var form = document.querySelector('.ad-form');
   window.variables = {
     PIN_WIDTH: 65,
     PIN_HEIGHT: 83,
@@ -10,19 +11,19 @@
     map: document.querySelector('.map'),
     pinTemplate: document.querySelector('#pin').content,
     fragment: document.createDocumentFragment(),
-    form: document.querySelector('.ad-form'),
-    formFieldsets: window.variables.form.querySelectorAll('fieldset'),
-    inputAddress: window.variables.form.querySelector('#address'),
-    inputType: window.variables.form.querySelector('#type'),
-    inputPrice: window.variables.form.querySelector('#price'),
-    inputRooms: window.variables.form.querySelector('#room_number'),
-    inputGuests: window.variables.form.querySelector('#capacity'),
-    inputTimeIn: window.variables.form.querySelector('#timein'),
-    inputTimeOut: window.variables.form.querySelector('#timeout'),
-    inputTitle: window.variables.form.querySelector('#title'),
-    inputDescription: window.variables.form.querySelector('#description'),
-    inputFeatures: window.variables.form.querySelector('.features'),
-    inputAvatar: window.variables.form.querySelector('#avatar'),
-    inputImages: window.variables.form.querySelector('#images')
+    form: form,
+    formFieldsets: form.querySelectorAll('fieldset'),
+    inputAddress: form.querySelector('#address'),
+    inputType: form.querySelector('#type'),
+    inputPrice: form.querySelector('#price'),
+    inputRooms: form.querySelector('#room_number'),
+    inputGuests: form.querySelector('#capacity'),
+    inputTimeIn: form.querySelector('#timein'),
+    inputTimeOut: form.querySelector('#timeout'),
+    inputTitle: form.querySelector('#title'),
+    inputDescription: form.querySelector('#description'),
+    inputFeatures: form.querySelector('.features'),
+    inputAvatar: form.querySelector('#avatar'),
+    inputImages: form.querySelector('#images')
   };
 })();
