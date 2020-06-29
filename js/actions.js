@@ -81,6 +81,11 @@
                 return it.offer.type === window.ad[i].offer.type;
               });
             }
+            removeCreatedPins();
+            for (var j = 0; j < 5; j++) {
+              window.variables.fragment.appendChild(createPins(window.ad[j]));
+            }
+            window.variables.mapPins.appendChild(window.variables.fragment).cloneNode(true);
           });
           for (var i = 0; i < 5; i++) {
             window.variables.fragment.appendChild(createPins(window.ad[i]));
