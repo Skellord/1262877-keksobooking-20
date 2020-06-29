@@ -72,13 +72,24 @@
         evt.preventDefault();
         resettingPage();
       });
-      var activatePage = function () {
+      window.loadPins = function () {
         window.load(function (pins) {
-          for (var i = 0; i < pins.length; i++) {
-            window.variables.fragment.appendChild(createPins(pins[i]));
+          window.ad = pins;
+          window.variables.filterType.addEventListener('change', function () {
+            for (var i = 0; i < window.ad.length; i++) {
+              window.ad.filter(function (it) {
+                return it.offer.type === window.ad[i].offer.type;
+              });
+            }
+          });
+          for (var i = 0; i < 5; i++) {
+            window.variables.fragment.appendChild(createPins(window.ad[i]));
           }
           window.variables.mapPins.appendChild(window.variables.fragment).cloneNode(true);
         });
+      };
+      var activatePage = function () {
+        window.loadPins();
         window.variables.map.classList.remove('map--faded');
         window.variables.form.classList.remove('ad-form--disabled');
         removeDisabledFieldsets();

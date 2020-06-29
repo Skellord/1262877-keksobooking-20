@@ -12,7 +12,7 @@
       });
       window.variables.inputType.addEventListener('change', function () {
         if (window.variables.inputType.value === 'bungalo') {
-          window.variables.inputPrice.min = window.inputPrice.placeholder = 0;
+          window.variables.inputPrice.min = window.variables.inputPrice.placeholder = 0;
         } else if (window.variables.inputType.value === 'flat') {
           window.variables.inputPrice.min = window.variables.inputPrice.placeholder = 1000;
         } else if (window.variables.inputType.value === 'house') {

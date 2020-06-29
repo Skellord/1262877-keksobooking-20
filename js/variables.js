@@ -24,6 +24,7 @@
     inputDescription: form.querySelector('#description'),
     inputFeatures: form.querySelector('.features'),
     inputAvatar: form.querySelector('#avatar'),
-    inputImages: form.querySelector('#images')
+    inputImages: form.querySelector('#images'),
+    filterType: document.querySelector('#housing-type')
   };
 })();
